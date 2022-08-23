@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace는 현재 파일에 정의된 SQL문 집합의 고유한 이름 -->
+<!-- 보통은 SQL문을 실행할 Dao 인터페이스 이름으로 설정 -->
+<mapper namespace="com.exam.member.MemberDao">
+	
+	<!-- com.exam.member.MemberVo 객체의 --> 
+	<resultMap type="com.exam.member.MemberVo" id="memberMap">
+		<!-- memId 속성(변수,필드)에 mem_id 컬럼 값을 저장 -->
+		<!-- PK 컬럼은 result 태그 대신 id 태그를 사용 -->
+		<id property="memId" column="mem_id" />
+		<result property="memPass" column="mem_pass" />
+		<result property="memName" column="mem_name" />
+		<result property="memPoint" column="mem_point" />		
+	</resultMap>
+
+	<!-- SQL문의 종류와 동일한 이름의 태그를 사용하여 SQL문을 등록
+	id는 파일 내에서 현재 SQL문의 고유한 이름
+	보통은 SQL문을 실행할 Dao 인터페이스 메서드 이름으로 설정 -->
+	<!-- SQL문 실행 결과 1개의 레코드를 담을 객체의 클래스명을 resultType 속성에 지정 -->
+	<!-- 마이바티스는 기본적으로 resultType객체의 컬럼이름과 동일한 이름의 변수(속성, 필드)에 컬럼의 값을 저장 -->
+  <select id="selectMemberList" resultType="MemberVo">
+  <!-- <select id="selectMemberList" resultMap="memberMap"> -->
+    <!-- SELECT mem_id memId, mem_pass memPass, mem_name memName, mem_point memPoint FROM member -->
+    SELECT mem_id, mem_name, mem_point FROM member
+  </select>
+  
+  <select id="selectMember" parameterType="string" resultType="MemberVo">  
+    SELECT mem_id, mem_name, mem_point FROM member WHERE mem_id = #{memId}
+  </select>
+  
+  <insert id="insertMember" parameterType="MemberVo">
+  	INSERT INTO member 
+	(mem_id, mem_pass, mem_name, mem_point) 
+	VALUES (#{memId}, #{memPass}, #{memName}, #{memPoint})
+  </insert>
+  
+   <update id="updateMember" parameterType="MemberVo">
+  	UPDATE member 
+	SET mem_name=#{memName}, mem_point=#{memPoint}
+	WHERE mem_id=#{memId}
+  </update>
+  
+  <delete id="delMember" parameterType="string">
+  	<!-- 단일값을 갖는 파라미터를 받은 경우에는 속성(변수)이름이 무의미 -->
+  	DELETE FROM member WHERE mem_id = #{memId}
+  </delete>
+  
+  <select id="selectLoginMember" parameterType="MemberVo" resultType="MemberVo">  
+    SELECT mem_id, mem_name, mem_point FROM member 
+    WHERE mem_id = #{memId} and mem_pass = #{memPass}
+  </select>
+  
+</mapper>
+
