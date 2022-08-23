@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exam.student.StuDao">	
+
+	<resultMap type="com.exam.student.StuVo" id="stuMap">	
+		<result property="stuNo" column="stu_no" />
+		<result property="stuName" column="stu_name" />
+		<result property="stuScore" column="stu_score" />		
+	</resultMap>
+	
+  <select id="selectStuList" resultType="com.exam.student.StuVo">  
+    SELECT stu_no, stu_name, stu_score FROM student
+  </select>
+  
+  <select id="selectStu" parameterType="string" resultType="StuVo">  
+    SELECT stu_no, stu_name, stu_score FROM student WHERE stu_no = #{stuNo}
+  </select>
+  
+  <insert id="insertStu" parameterType="com.exam.student.StuVo">
+  	INSERT INTO student 
+	(stu_no, stu_name, stu_score) 
+	VALUES (#{stuNo}, #{stuName}, #{stuScore})
+  </insert>
+  
+   <update id="updateStu" parameterType="StuVo">
+  	UPDATE student 
+	SET stu_name=#{stuName}, stu_score=#{stuScore}
+	WHERE stu_no=#{stuNo}
+  </update>
+  
+  <delete id="delStu" parameterType="string">
+  	<!-- 단일값을 갖는 파라미터를 받은 경우에는 속성(변수)이름이 무의미 -->
+  	DELETE FROM student WHERE stu_no = #{stuNo}
+  </delete>
+</mapper>

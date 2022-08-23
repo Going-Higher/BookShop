@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exam.exspring.bbs.BbsDao">		
+
+  <select id="selectBbsList" resultType="BbsVo"> 
+    SELECT bbs_no, bbs_title, bbs_writer, bbs_req_date 
+    FROM bbs
+    <where>
+	    <if test="searchWord != null and searchWord != ''">
+	    	<choose>
+	    		<when test="searchType == 'title'">
+			    	bbs_title LIKE '%' || #{searchWord} || '%'
+	    		</when>
+	    		<when test="searchType == 'content'">
+			    	bbs_content LIKE '%' || #{searchWord} || '%'
+	    		</when>
+	    		<when test="searchType == 'total'">
+			    	bbs_title LIKE '%' || #{searchWord} || '%'
+	    	    		OR bbs_content LIKE '%' || #{searchWord} || '%'
+	    		</when>
+	    	</choose>
+	    </if>
+    </where>
+  </select>
+  
+  <select id="selectBbs" parameterType="int" resultType="BbsVo">  
+    SELECT bbs_no, bbs_title, bbs_content, bbs_writer, bbs_req_date 
+    FROM bbs 
+    WHERE bbs_no = #{bbsNo}
+  </select>
+  
+  <insert id="insertBbs" parameterType="BbsVo">
+  	INSERT INTO bbs 
+	(bbs_no, bbs_title, bbs_content, bbs_writer, bbs_req_date) 
+	VALUES (bbs_seq.nextval, #{bbsTitle}, #{bbsContent}, #{bbsWriter}, sysdate)
+  </insert>
+  
+   <update id="updateBbs" parameterType="BbsVo">
+  	UPDATE bbs 
+	SET bbs_title=#{bbsTitle}, bbs_content=#{bbsContent}
+	WHERE bbs_no=#{bbsNo}
+  </update>
+  
+  <delete id="delBbs" parameterType="int">
+  	DELETE FROM bbs WHERE bbs_no = #{bbsNo}
+  </delete>
+  
+  <select id="selectLoginBbs" parameterType="BbsVo" resultType="BbsVo">  
+    SELECT bbs_no, bbs_title, bbs_content, bbs_writer, bbs_req_date, bbs_count FROM bbs 
+    WHERE bbs_no = #{bbsNo}
+  </select>
+  
+</mapper>
+

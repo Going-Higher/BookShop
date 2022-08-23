@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exam.exspring.reply.ReplyDao">		
+
+  <insert id="insertReply" parameterType="ReplyVo">
+  	INSERT INTO reply
+  	(rep_no, rep_content, rep_writer, rep_req_date, rep_bbs_no)
+  	VALUES
+  	(rep_seq.nextval, #{repContent}, #{repWriter}, SYSDATE, #{repBbsNo})
+  </insert>
+  
+  <select id="selectReplyList" parameterType="int" resultType="ReplyVo">
+  	SELECT  rep_no, rep_content, rep_writer, rep_req_date, rep_bbs_no
+  	FROM reply
+  	WHERE rep_bbs_no = #{repBbsNo}
+  	ORDER BY rep_req_date DESC
+  </select>
+  
+  <delete id="deleteReply" parameterType="ReplyVo">
+  	DELETE 
+  	FROM reply
+  	WHERE rep_no = #{repNo} AND rep_writer = #{repWriter}
+  </delete>
+  
+</mapper>
+
