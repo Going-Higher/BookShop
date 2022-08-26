@@ -1,6 +1,7 @@
 package com.exam.myapp;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -40,9 +41,17 @@ public class TestController {
 //	public String test(int x, int y, Map map) {
 	public String test(TestVo vo, Map map) {
 		System.out.println("TEST!");
+		
+		for (LicenseVO lvo : vo.getLicense()) {
+			System.out.println(lvo.getLicenseName());
+			System.out.println(lvo.getLicenseOrg());
+			System.out.println(lvo.getLicenseDate());			
+		}
+		
 		for(String f : vo.getFood()) {
 			System.out.println(f);			
 		}
+		
 //		int sum = x + y;
 		int sum = vo.getX() + vo.getY();
 		map.put("result", sum);		
