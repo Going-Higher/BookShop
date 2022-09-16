@@ -16,15 +16,22 @@
 /* alert('')
 confirm('')
 prompt('') */	
-	$(function(){
+	$(function(){//문서 로드가 완료된 후 실행
 		$('#delLink').on('click', function(e){//id=delLink인 엘리먼트 클릭시 실행
 			var ok = confirm('삭제하시겠습니까?');		
 			if(ok === false) {
 				e.preventDefault();//이벤트에 대한 브라우저 기본동작 취소
-// 				return false;//이벤트리스너함수에서 false를 반환하면 	이벤트에 대한 브라우저 기본동작 취소			
+// 				return false;//이벤트리스너함수에서 false를 반환하면 이벤트에 대한 브라우저 기본동작 취소			
 			}
 		});		
 	});
+// 	window.addEventListener('DOMContentLoaded', function() {
+// 		document.querySelector('#delLink').addEventListener('click', function(e) {
+// 			if(!confirm('삭제하시겠습니까?')) {
+// 				e.preventDefault(); //또는 return false;
+// 			}			
+// 		};
+// 	});
 </script>
 </head>
 <body>

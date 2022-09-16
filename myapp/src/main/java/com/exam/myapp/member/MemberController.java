@@ -4,13 +4,16 @@ package com.exam.myapp.member;
 // MemberController 클래스의 List() 메서드가 실행되고,
 // 브라우저 화면에 "회원목록" 이라고 출력되도록 구현
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/member/")
@@ -58,5 +61,17 @@ public class MemberController {
 	public String del(MemberVo vo) {			
 		int num = memberService.delete(vo);		
 		return "redirect:/member/list.do";
+	}
+	
+	@RequestMapping(path = "check.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> checkId(MemberVo vo) {	
+		
+		MemberVo mvo = memberService.select(vo);
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("result", mvo==null);//사용가능한경우 {result:true}, 불가능한 경우 {result:false}
+		
+		return map;
 	}
 }
