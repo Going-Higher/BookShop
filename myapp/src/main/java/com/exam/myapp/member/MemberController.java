@@ -38,4 +38,25 @@ public class MemberController {
 		int num = memberService.insert(vo);
 		return "redirect:/member/list.do";
 	}
+	
+	@RequestMapping(path = "edit.do", method = RequestMethod.GET)
+	public String editform(MemberVo vo, Model model) {	
+		
+		MemberVo mvo = memberService.select(vo);
+		model.addAttribute("memVo", mvo);
+		
+		return "member/edit";
+	}
+	
+	@RequestMapping(path = "edit.do", method = RequestMethod.POST)
+	public String edit(MemberVo vo) {
+		int num = memberService.update(vo);
+		return "redirect:/member/list.do";
+	}
+	
+	@RequestMapping(path = "del.do", method = RequestMethod.GET)
+	public String del(MemberVo vo) {			
+		int num = memberService.delete(vo);		
+		return "redirect:/member/list.do";
+	}
 }

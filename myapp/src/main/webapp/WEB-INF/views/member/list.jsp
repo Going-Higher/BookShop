@@ -26,7 +26,7 @@
 			<tbody>
 				<c:forEach var="vo" items="${memList}">
 					<tr>
-						<td><c:out value="${vo.memId}" /></td><!-- c:out 태그로 보안 강화 -->
+						<td><a href="${pageContext.request.contextPath}/member/edit.do?memId=${vo.memId}"><c:out value="${vo.memId}" /></a></td><!-- c:out 태그로 보안 강화 -->
 						<td><c:out value="${vo.memName}" /></td>
 						<td>${vo.memPoint}</td>
 					</tr>			
