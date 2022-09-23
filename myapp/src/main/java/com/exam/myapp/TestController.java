@@ -1,5 +1,6 @@
 package com.exam.myapp;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -58,5 +59,25 @@ public class TestController {
 //		map.put("testVo", vo);		
 		
 		return "test";
+	}
+	
+	@RequestMapping(path = "/param.do")
+	public String param(TestVo vo, Model model) {
+		List<CodeVo> list = new ArrayList<CodeVo>();
+		list.add(new CodeVo("f001", "피자"));
+		list.add(new CodeVo("f002", "햄버거"));
+		list.add(new CodeVo("f003", "스파게티"));
+		model.addAttribute("codeList", list);
+		
+//		TestVo vo = new TestVo();
+//		vo.setLunch("f002");
+//		vo.setDinner("f001");
+//		List<String> list2 = new ArrayList<String>();
+//		list2.add("f001");
+//		list2.add("f003");
+//		vo.setFood(list2);
+//		model.addAttribute("testVo", vo);
+		
+		return "param";
 	}
 }

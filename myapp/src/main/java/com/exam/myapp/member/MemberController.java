@@ -8,9 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,12 +35,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping(path = "add.do", method = RequestMethod.GET)
-	public String addform() {		
+	public String addform(MemberVo vo) {		
 		return "member/add";
 	}
 	
 	@RequestMapping(path = "add.do", method = RequestMethod.POST)
-	public String add(MemberVo vo) {
+	//@RequestMapping 메서드의 매개변수에 @Valid 를 적용하면, 해당 객체의 클래스에 지정한 검증 조건에 맞는지 검증 수행
+	//@Valid 매개변수 뒤에 BindingResult (또는 Erros) 타입의 매객변수를 추가하여 검증결과를 받아서 사용 가능
+	public String add(@Valid MemberVo vo, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) { //검증결과 에러가 있다면
+			System.out.println("검증 실패!");
+			return "member/add"; //회원추가 jsp 화면을 다시 출력
+		}
 		int num = memberService.insert(vo);
 		return "redirect:/member/list.do";
 	}

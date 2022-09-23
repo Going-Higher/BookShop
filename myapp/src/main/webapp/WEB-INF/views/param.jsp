@@ -12,7 +12,7 @@
 <body>
 	<h2>스프링 폼 태그 사용</h2>
 	<%-- <form:form> 태그 내부의 입력 요소들이 사용할 값을 담고 있는 모델 객체의 이름을 modelAttribute 속성값으로 지정 --%>
-	<form:form modelAttribute="testVo">
+	<form:form modelAttribute="testVo" action="${pageContext.request.contextPath}/param.do">
 		<!-- 각 입력요소의 값으로 사용할 모델 객체의 속성이름을 path 속성값으로 지정 -->
 		점심 식사 : 
 		<form:radiobuttons path="lunch" items="${codeList}" itemValue="id" itemLabel="title"/>
@@ -21,11 +21,13 @@
 		<form:select path="dinner" items="${codeList}" itemValue="id" itemLabel="title"/>
 		<br/>
 		좋아하는 음식들 :
-		
+		<form:checkboxes path="food" items="${codeList}" itemValue="id" itemLabel="title"/>
+		<br/>
+		<input type="submit" />
 	</form:form>
 	
 	<h2>스프링 폼 태그 미사용</h2>
-	<form action="${pageContext.request.contextPath}/param.do">
+	<form action="" method="post">
 		<!-- 라디오버튼으로 codeList에 있는 음식들을 선택할 수 있도록 구현 -->
 		<!-- 현재 testVo의 lunch의 음식이 선택되어 있도록 구현 -->
 		점심 식사 : 
