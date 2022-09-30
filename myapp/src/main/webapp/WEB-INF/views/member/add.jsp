@@ -2,16 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Bootstrap CSS -->
-<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/css/bootstrap-icons-1.9.1/bootstrap-icons.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
-<title>회원관리</title>
+
 <script type="text/javascript">
 // 	(1) 회원등록 폼을 제출(submit)할 때, 비밀번호와 비밀번호확인 값이 다르면 안내메시지를 출력하고 제출하지 않도록 구현
 // 	(2) 회원등록 폼을 제출(submit)할 때, 중복확인을 성공한 적이 없으면 안내메시지를 출력하고 제출하지 않도록 구현
@@ -64,50 +55,43 @@
 		
 	});
 </script>
-</head>
-<body>
-	<div class="container">
-		<div class="row">
-			<div class="col">
-				<h1>회원등록</h1>
-				<form:form modelAttribute="memberVo" id="memForm" action="${pageContext.request.contextPath}/member/add.do" method="post">
-					<div class="mb-3">
-						<form:label path="memId" class="form-label">아이디</form:label> 
-						<div class="input-group">
-							<form:input path="memId" class="form-control" cssErrorClass="form-control is-invalid" />
-							<button type="button" id="dupBtn" class="btn btn-primary">중복확인</button>
-							<!-- 컨트롤러에서 검증 결과, 모델 객체의 memId 속성값과 관련된 오류가 있는 경우, 오류 메시지 출력 -->
-							<form:errors path="memId" cssClass="invalid-feedback" />
-						</div>
-					</div>
-					<div class="mb-3">
-						<form:label path="memPass" class="form-label">비밀번호</form:label> 
-						<form:password path="memPass" class="form-control" cssErrorClass="form-control is-invalid" />
-						<form:errors path="memPass" cssClass="invalid-feedback" />
-					</div>
-					<div class="mb-3">
-						<label for="memPassCheck" class="form-label">비밀번호확인</label> 
-						<input type="password" class="form-control" id="memPassCheck">
-					</div>
-					<div class="mb-3">
-						<form:label path="memName" class="form-label">이름</form:label> 
-						<form:input path="memName" class="form-control" cssErrorClass="form-control is-invalid" />
-						<form:errors path="memName" cssClass="invalid-feedback" />
-					</div>
-					<div class="mb-3">
-						<form:label path="memPoint" class="form-label">포인트</form:label> 
-						<form:input type="number" path="memPoint" class="form-control" cssErrorClass="form-control is-invalid"/>
-						<form:errors path="memPoint" cssClass="invalid-feedback" />
-					</div>
-					<button type="submit" id="saveBtn" class="btn btn-primary"><i class="bi-file-arrow-up"></i> 저장</button>
-					<a href="${pageContext.request.contextPath}/member/list.do">
-						<button type="button" class="btn btn-primary"><i class="bi-plus-circle"></i> 회원목록</button>
-					</a>
-				</form:form>
+
+<div class="row">
+	<div class="col">
+		<h1>회원등록</h1>
+		<form:form modelAttribute="memberVo" id="memForm" action="${pageContext.request.contextPath}/member/add.do" method="post">
+			<div class="mb-3">
+				<form:label path="memId" class="form-label">아이디</form:label> 
+				<div class="input-group">
+					<form:input path="memId" class="form-control" cssErrorClass="form-control is-invalid" />
+					<button type="button" id="dupBtn" class="btn btn-primary">중복확인</button>
+					<!-- 컨트롤러에서 검증 결과, 모델 객체의 memId 속성값과 관련된 오류가 있는 경우, 오류 메시지 출력 -->
+					<form:errors path="memId" cssClass="invalid-feedback" />
+				</div>
 			</div>
-		</div>
+			<div class="mb-3">
+				<form:label path="memPass" class="form-label">비밀번호</form:label> 
+				<form:password path="memPass" class="form-control" cssErrorClass="form-control is-invalid" />
+				<form:errors path="memPass" cssClass="invalid-feedback" />
+			</div>
+			<div class="mb-3">
+				<label for="memPassCheck" class="form-label">비밀번호확인</label> 
+				<input type="password" class="form-control" id="memPassCheck">
+			</div>
+			<div class="mb-3">
+				<form:label path="memName" class="form-label">이름</form:label> 
+				<form:input path="memName" class="form-control" cssErrorClass="form-control is-invalid" />
+				<form:errors path="memName" cssClass="invalid-feedback" />
+			</div>
+			<div class="mb-3">
+				<form:label path="memPoint" class="form-label">포인트</form:label> 
+				<form:input type="number" path="memPoint" class="form-control" cssErrorClass="form-control is-invalid"/>
+				<form:errors path="memPoint" cssClass="invalid-feedback" />
+			</div>
+			<button type="submit" id="saveBtn" class="btn btn-primary"><i class="bi-file-arrow-up"></i> 저장</button>
+			<a href="${pageContext.request.contextPath}/member/list.do">
+				<button type="button" class="btn btn-primary"><i class="bi-plus-circle"></i> 회원목록</button>
+			</a>
+		</form:form>
 	</div>
-	<!-- Option 1: Bootstrap Bundle with Popper -->
-	<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>

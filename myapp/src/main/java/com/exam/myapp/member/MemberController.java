@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,7 +62,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping(path = "edit.do", method = RequestMethod.POST)
-	public String edit(MemberVo vo) {
+	public String edit(@ModelAttribute("memVo") @Valid MemberVo vo, BindingResult bindingResult) {
+		if(bindingResult.hasFieldErrors("memName") || bindingResult.hasFieldErrors("memPoint")) {
+			//회원정보 변경시에는 이름과 포인트만 검증
+			return "member/edit";
+		}		
 		int num = memberService.update(vo);
 		return "redirect:/member/list.do";
 	}

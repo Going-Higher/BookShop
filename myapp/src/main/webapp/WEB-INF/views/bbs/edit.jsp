@@ -28,27 +28,27 @@ prompt('') */
 
 <div class="row">
 	<div class="col">
-		<h1>회원정보변경</h1>
-		<form:form modelAttribute="memVo" action="${pageContext.request.contextPath}/member/edit.do" method="post">
+		<h1>게시글변경</h1>
+		<form:form modelAttribute="bbsVo" action="${pageContext.request.contextPath}/bbs/edit.do" method="post">
 			<div class="mb-3">
-				<form:label path="memId" class="form-label">아이디</form:label> 
-				<form:input path="memId" readonly="true" class="form-control" cssErrorClass="form-control is-invalid"/>
+				<form:label path="bbsNo" class="form-label">글번호</form:label> 
+				<form:input path="bbsNo" readonly="true" class="form-control" cssErrorClass="form-control is-invalid"/>
 			</div>
 			<div class="mb-3">
-				<form:label path="memName" class="form-label">이름</form:label> 
-				<form:input path="memName" class="form-control" cssErrorClass="form-control is-invalid"/>
-				<form:errors path="memName" cssClass="invalid-feedback" />
+				<form:label path="bbsTitle" class="form-label">제목</form:label> 
+				<form:input path="bbsTitle" class="form-control" cssErrorClass="form-control is-invalid" />
+				<form:errors path="bbsTitle" cssClass="invalid-feedback" />
 			</div>
 			<div class="mb-3">
-				<form:label path="memPoint" class="form-label">포인트</form:label> 
-				<form:input type="number" path="memPoint" class="form-control" cssErrorClass="form-control is-invalid"/>
-				<form:errors path="memPoint" cssClass="invalid-feedback" />
+				<form:label path="bbsContent" class="form-label">내용</form:label> 
+				<form:textarea path="bbsContent" rows="5" class="form-control" cssErrorClass="form-control is-invalid"/>
+				<form:errors path="bbsContent" cssClass="invalid-feedback" />
 			</div>
 			<button type="submit" class="btn btn-primary"><i class="bi-file-arrow-up"></i> 저장</button>
-			<a href="${pageContext.request.contextPath}/member/list.do">
-				<button type="button" class="btn btn-primary"><i class="bi-list"></i> 회원목록</button>
+			<a href="${pageContext.request.contextPath}/bbs/list.do">
+				<button type="button" class="btn btn-primary"><i class="bi-list"></i> 목록</button>
 			</a>
-			<a id="delLink" href="${pageContext.request.contextPath}/member/del.do?memId=${memVo.memId}">
+			<a id="delLink" href="${pageContext.request.contextPath}/bbs/del.do?bbsNo=${bbsVo.bbsNo}">
 				<button type="button" class="btn btn-primary"><i class="bi-plus-circle"></i> 삭제</button>
 			</a>
 		</form:form>
