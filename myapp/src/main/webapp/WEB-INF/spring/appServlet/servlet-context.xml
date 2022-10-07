@@ -26,7 +26,21 @@
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
 	</beans:bean>
+	<!-- 컨트롤러가 문자열(뷰이름)을 반환했을 때, TilesViewResolver가 먼저 뷰이름을 처리하고,
+	TilesViewResolver가 처리할 수 없는 경우 InternalResourceViewResolver가 처리하도록 order 속성을 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+		<beans:property name="order" value="1" />
+	</beans:bean>
+	<!-- 타일즈 설정 등록(화면 정의 설정 파일 위치 설정) -->
+	 <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	   <beans:property name="definitions">
+	     <beans:list>
+	       <beans:value>/WEB-INF/views/tiles/tiles.xml</beans:value>
+	     </beans:list>
+	   </beans:property>
+	 </beans:bean>
 	
 	<context:component-scan base-package="com.exam.myapp" />
 	
@@ -36,9 +50,20 @@
     <!-- 클래스패스 기준으로 메세지를 정의한 프로퍼터파일의 경로를 확장자 제외하고 지정 -->
      <!-- message_en.properties, messag_ko.properties처럼 국가 및 언어 코드를 접미어로 붙인 파일들을 사용하면,
        로케일에 따라서 다른 언어의 메세지들이 자동으로 사용되도록 설정 가능 -->
-    <beans:property name="basename" value="messages"/> 
-	
+    	<beans:property name="basename" value="messages"/> 
 	</beans:bean>	
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/member/login.do"/>
+			<exclude-mapping path="/member/add.do"/>
+			<exclude-mapping path="/member/check.do"/>
+			<beans:bean class="com.exam.myapp.member.LoginInterceptor" />
+		</interceptor>
+	</interceptors>
+	
+	<!-- 파일이 포함된 폼 데이터를 처리를 담당하는 객체를 multipartResolver 라는 이름으로 등록 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" ></beans:bean>
 	
 </beans:beans>

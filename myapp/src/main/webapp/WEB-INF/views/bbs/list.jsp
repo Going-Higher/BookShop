@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="row">
     <div class="col">
 	<h1>게시글목록</h1>
@@ -17,7 +17,7 @@
 				<tr>
 					<td><a href="${pageContext.request.contextPath}/bbs/edit.do?bbsNo=${vo.bbsNo}"><c:out value="${vo.bbsTitle}" /></a></td><!-- c:out 태그로 보안 강화 -->
 					<td><c:out value="${vo.bbsWriter}" /></td>
-					<td>${vo.bbsReqDate}</td>
+					<td><fmt:formatDate value="${vo.bbsReqDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				</tr>			
 			</c:forEach>
 		</tbody>

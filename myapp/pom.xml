@@ -152,6 +152,13 @@
 			<version>1.2</version>
 		</dependency>	
 		
+		<!-- 파일 업로드를 위한 CommonsMultipartResolver 사용에 필요한 라이브러리 -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
@@ -164,6 +171,13 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.24</version>
 			<scope>provided</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-jsp</artifactId>
+		    <version>3.0.8</version>
 		</dependency>
 	
 		<!-- Test -->

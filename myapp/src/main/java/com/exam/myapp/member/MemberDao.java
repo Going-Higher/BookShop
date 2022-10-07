@@ -11,4 +11,5 @@ public interface MemberDao {
 	public MemberVo select(MemberVo vo);
 	public int update(MemberVo vo);
 	public int delete(MemberVo vo);
+	public MemberVo selectLogin(MemberVo vo);
 }

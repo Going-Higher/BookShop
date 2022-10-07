@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,5 +88,35 @@ public class MemberController {
 		map.put("result", mvo==null);//사용가능한경우 {result:true}, 불가능한 경우 {result:false}
 		
 		return map;
+	}
+	
+	@RequestMapping(path = "login.do", method = RequestMethod.GET)
+	public String loginForm() {
+		return "member/login";
+	}
+	
+	@RequestMapping(path = "login.do", method = RequestMethod.POST)
+	public String login(MemberVo vo, HttpSession session) {
+		
+		MemberVo memberVo = memberService.selectLogin(vo);
+		
+		if(memberVo == null) { //로그인 실패
+			
+			return "member/login";
+		}
+		//로그인 성공
+		session.setAttribute("loginUser", memberVo);
+		
+		return "redirect:/member/list.do";
+	}
+	
+	@RequestMapping(path = "logout.do", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		
+//		session.setAttribute("loginUser", null);
+		session.removeAttribute("loginUser");
+//		session.invalidate();
+		
+		return "redirect:/member/login.do";
 	}
 }

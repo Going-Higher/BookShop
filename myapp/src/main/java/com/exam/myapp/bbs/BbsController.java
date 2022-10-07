@@ -1,9 +1,11 @@
 package com.exam.myapp.bbs;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.exam.myapp.member.MemberVo;
 
 @Controller
 @RequestMapping("/bbs/")
@@ -34,11 +39,14 @@ public class BbsController {
 	}
 	
 	@RequestMapping(path = "add.do", method = RequestMethod.POST)
-	public String add(@Valid BbsVo vo, BindingResult bindingResult) {
+	public String add(@Valid BbsVo vo, BindingResult bindingResult, HttpSession session) {
 //		if(bindingResult.hasErrors()) { //검증결과 에러가 있다면
 //			System.out.println("검증 실패!");
 //			return "bbs/add"; //회원추가 jsp 화면을 다시 출력
 //		}
+		MemberVo mvo = (MemberVo) session.getAttribute("loginUser");
+		vo.setBbsWriter(mvo.getMemId());
+		
 		int num = bbsService.insert(vo);
 		return "redirect:/bbs/list.do";
 	}

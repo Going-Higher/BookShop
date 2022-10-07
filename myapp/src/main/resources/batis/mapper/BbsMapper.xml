@@ -15,6 +15,11 @@
   </select>
   
   <insert id="insert">
+  	<!-- 자동생성되는 값을 파라미터 객체에 담아서 사용하기 위해서 selectKey 사용 -->
+  	<!-- insert문 실행 전(BEFORE)에 select문을 실행하고, 그 결과인 int값을 파라미터객체의 bbsNo 속성(변수)에 저장 -->
+  	<selectKey resultType="int" keyProperty="bbsNo" order="BEFORE">
+  		SELECT BBS_SEQ.NEXTVAL FROM DUAL
+  	</selectKey>
 	INSERT INTO BBS
 	    (BBS_NO, 
 	    BBS_TITLE, 
@@ -23,7 +28,7 @@
 	    BBS_REQ_DATE, 
 	    BBS_COUNT)
 	VALUES
-	    (BBS_SEQ.NEXTVAL, 
+	    (#{bbsNo}, 
 	    #{bbsTitle}, 
 	    #{bbsContent}, 
 	    #{bbsWriter}, 
