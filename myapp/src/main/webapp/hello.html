@@ -23,13 +23,14 @@
 		}
 		return obj;
 	}
+	var $ = myQuery;
 	
 	// 	btnElm.addEventListener('click', function(e) { });
 	window.addEventListener('DOMContentLoaded', function(e) {   
 		var btnElm = document.getElementById('btn');
 		console.log(btnElm);
 		btnElm.onclick = function() {
-			myQuery('a').attr('href', 'https://spring.io/');
+			$('a').attr('href', 'https://spring.io/');
 // 			var linkList = document.getElementsByTagName('a');
 // 			for (var i = 0; i < linkList.length; i++) {
 // 				var link = linkList[i];
