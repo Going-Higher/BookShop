@@ -3,6 +3,8 @@ package com.exam.myapp.bbs;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -83,13 +85,26 @@ public class BbsController {
 	
 	@RequestMapping(path = "down.do", method = RequestMethod.GET)
 	public void checkId(AttachVo vo, HttpServletResponse resp) {	
-		AttachVo avo = bbsService.selectAttach(vo);
+		AttachVo avo = bbsService.selectAttach(vo); //첨부파일 정보 조회
 		
-		//브라우저가 응답데이터를 다운로드하도록 컨텐트타입 설정
+		File f = new File("D:/web/upload/", avo.getAttNewName()); //서버에 저장된 첨부파일
+		
+		//브라우저가 응답데이터를 다운로드하도록 응답 내용의 타입 정보를 설정
 		resp.setContentType("application/octet-stream");
+//		try {
+//			//원래 파일의 타입대로 응답 내용의 타입 정보를 설정
+//			resp.setContentType(Files.probeContentType(f.toPath()));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		resp.setContentLengthLong(f.length()); //파일 크기를 응답 내용의 길이로 설정
 		
-		File f = new File("D:/web/upload/", avo.getAttNewName());
 		try {
+			//응답으로 전송하는 파일을 어떤 이름으로 저장해야 하는지를 Content-Disposition 헤더로 설정
+			String fname = URLEncoder.encode(avo.getAttOrgName(), "UTF-8");
+			
+			resp.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + fname);
+		
 			FileCopyUtils.copy(new FileInputStream(f), resp.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
