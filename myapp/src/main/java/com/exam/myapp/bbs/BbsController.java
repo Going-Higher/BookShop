@@ -83,11 +83,15 @@ public class BbsController {
 		return "redirect:/bbs/list.do";
 	}
 	
+	//컨트롤러 메서드에서 응답객체를 인자로 받고 반환타입이 void 이면,
+	//스프링은 해당 컨트롤러가 직접 응답을 처리한다고 판단하여
+	//스프링은 뷰에 대한 처리를 하지 않음
 	@RequestMapping(path = "down.do", method = RequestMethod.GET)
 	public void checkId(AttachVo vo, HttpServletResponse resp) {	
 		AttachVo avo = bbsService.selectAttach(vo); //첨부파일 정보 조회
 		
-		File f = new File("D:/web/upload/", avo.getAttNewName()); //서버에 저장된 첨부파일
+		//지정한 첨부파일을 담고 있는 실제 서버 상의 파일 객체를 획득
+		File f = bbsService.getAttachFile(avo);
 		
 		//브라우저가 응답데이터를 다운로드하도록 응답 내용의 타입 정보를 설정
 		resp.setContentType("application/octet-stream");
@@ -101,10 +105,10 @@ public class BbsController {
 		
 		try {
 			//응답으로 전송하는 파일을 어떤 이름으로 저장해야 하는지를 Content-Disposition 헤더로 설정
-			String fname = URLEncoder.encode(avo.getAttOrgName(), "UTF-8");
-			
+			//아스키코드 이외의 문자들은 URL 인코딩 후, + 를 공백문자로 변경 필요
+			String fname = URLEncoder.encode(avo.getAttOrgName(), "UTF-8").replace("+", "%20");
 			resp.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + fname);
-		
+			//첨부파일의 내용을 응답객체에 쓰기(전송)
 			FileCopyUtils.copy(new FileInputStream(f), resp.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();

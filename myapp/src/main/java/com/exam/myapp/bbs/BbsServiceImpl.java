@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,8 @@ public class BbsServiceImpl implements BbsService {
 	private BbsDao bbsDao;
 	@Autowired
 	private AttachDao attachDao;
+	@Value("${upload.path}") //스프링에 등록된 프로퍼티값을 주입
+	private String uploadDir;
 
 	@Override
 	public List<BbsVo> selectList() {
@@ -40,7 +43,7 @@ public class BbsServiceImpl implements BbsService {
 				avo.setAttOrgName(mf.getOriginalFilename()); //첨부파일의 원래파일명
 				String newName = UUID.randomUUID().toString(); //중복확률이 매우 낮은 임의의 문자열 생성
 				try {
-					mf.transferTo(new File("D:/web/upload/", newName)); //mf의 파일 내용을 지정한 파일로 저장
+					mf.transferTo(new File(uploadDir, newName)); //mf의 파일 내용을 지정한 파일로 저장
 					avo.setAttNewName(newName); //첨부파일의 서버저장파일명
 					avo.setAttBbsNo(vo.getBbsNo()); //첨부파일 속한 게시글의 글번호
 					//AttachVo 객체의 정보를 attach 테이블에 insert
@@ -73,6 +76,11 @@ public class BbsServiceImpl implements BbsService {
 	@Override
 	public AttachVo selectAttach(AttachVo vo) {
 		return attachDao.select(vo);
+	}
+
+	@Override
+	public File getAttachFile(AttachVo vo) {
+		return new File(uploadDir, vo.getAttNewName()); //서버에 저장된 첨부파일 객체
 	}
 
 }

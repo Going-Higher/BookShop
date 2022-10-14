@@ -59,4 +59,7 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
+	<!-- 지정한 프로퍼티 파일의 프로퍼티값을 스프링 설정 파일 또는 자바코드의 @Value 에서 ${프로퍼티키} 표현으로 사용 가능 -->
+	<context:property-placeholder location="classpath:config/*.properties"/>
+	
 </beans>
