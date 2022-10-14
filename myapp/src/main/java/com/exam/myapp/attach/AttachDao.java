@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AttachDao {
 //	public List<AttachVo> selectList();
 	public int insert(AttachVo vo);
-//	public AttachVo select(AttachVo vo);
+	public AttachVo select(AttachVo vo);
 //	public int update(AttachVo vo);
 //	public int delete(AttachVo vo);
 }

@@ -42,7 +42,12 @@
 	   </beans:property>
 	 </beans:bean>
 	
-	<context:component-scan base-package="com.exam.myapp" />
+	<!-- use-default-filters 속성을 false로 설정하여,
+	@Component, @Controller, @Service, @Repository가 붙은 클래스를 자동등록하는 기능을 해제 -->
+	<context:component-scan base-package="com.exam.myapp" use-default-filters="false">
+		<!-- @Controller가 붙은 클래스를 스프링에 등록 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 	
 	<!-- MessageSource 객체를 "messageSource"라는 이름으로 스프링에 등록하면,
    해당 MessageSource 객체의 메세지들이 스프링에 등록되어 사용가능 -->
@@ -59,6 +64,8 @@
 			<exclude-mapping path="/member/login.do"/>
 			<exclude-mapping path="/member/add.do"/>
 			<exclude-mapping path="/member/check.do"/>
+			<exclude-mapping path="/css/**"/>
+			<exclude-mapping path="/js/**"/>
 			<beans:bean class="com.exam.myapp.member.LoginInterceptor" />
 		</interceptor>
 	</interceptors>

@@ -1,16 +1,21 @@
 package com.exam.myapp.bbs;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.exam.myapp.attach.AttachVo;
 import com.exam.myapp.member.MemberVo;
 
 @Controller
@@ -75,15 +81,18 @@ public class BbsController {
 		return "redirect:/bbs/list.do";
 	}
 	
-	@RequestMapping(path = "check.do", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> checkId(BbsVo vo) {	
+	@RequestMapping(path = "down.do", method = RequestMethod.GET)
+	public void checkId(AttachVo vo, HttpServletResponse resp) {	
+		AttachVo avo = bbsService.selectAttach(vo);
 		
-		BbsVo mvo = bbsService.select(vo);
+		//브라우저가 응답데이터를 다운로드하도록 컨텐트타입 설정
+		resp.setContentType("application/octet-stream");
 		
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("result", mvo==null);//사용가능한경우 {result:true}, 불가능한 경우 {result:false}
-		
-		return map;
+		File f = new File("D:/web/upload/", avo.getAttNewName());
+		try {
+			FileCopyUtils.copy(new FileInputStream(f), resp.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -14,6 +14,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		HttpSession session = request.getSession();
 		MemberVo vo = (MemberVo) session.getAttribute("loginUser");
+		
 		if(vo == null) { //로그인하지 않은 경우
 			response.sendRedirect(request.getContextPath() + "/member/login.do"); //로그인화면으로 리다이렉트
 			return false; //컨트롤러 미실행

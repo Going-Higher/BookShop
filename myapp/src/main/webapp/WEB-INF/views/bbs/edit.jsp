@@ -44,6 +44,15 @@ prompt('') */
 				<form:textarea path="bbsContent" rows="5" class="form-control" cssErrorClass="form-control is-invalid"/>
 				<form:errors path="bbsContent" cssClass="invalid-feedback" />
 			</div>
+			<div class="mb-3">
+				<c:forEach items="${bbsVo.attList}" var="avo">
+					<div>
+						<a href="${pageContext.request.contextPath}/bbs/down.do?attNo=${avo.attNo}">
+							<c:out value="${avo.attOrgName}"></c:out>
+						</a>
+					</div>
+				</c:forEach>
+			</div>
 			<button type="submit" class="btn btn-primary"><i class="bi-file-arrow-up"></i> 저장</button>
 			<a href="${pageContext.request.contextPath}/bbs/list.do">
 				<button type="button" class="btn btn-primary"><i class="bi-list"></i> 목록</button>
