@@ -3,8 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Hello</title>
+<script type="text/javascript">
+// 	링크변경 버튼을 클릭하면, 화면에 있는 모든 링크의 주소를 https://spring.io/ 로 변경
+
+// 	문서로드 완료시 실행할 함수 설정하는 방법
+	//(1) 문서에 포함된 외부 리소스들까지 로드가 완료된 후 
+// 	window.onload = function() {	};
+	//(2) 문서에 포함된 외부 리소스들의 로드와 상관없이 문서 구조(DOM TREE)를 완성한 후 
+// 	window.addEventListener('DOMContentLoaded', function(e) {   });
+	
+	function myQuery(selector) {
+		var obj = {};
+		obj.elementList = document.querySelectorAll(selector);
+		obj.attr = function(attrName, attrVale) {
+			for (var i = 0; i < this.elementList.length; i++) {
+				var elm = this.elementList[i];
+				elm[attrName] = attrVale;
+			}
+		}
+		return obj;
+	}
+	
+	// 	btnElm.addEventListener('click', function(e) { });
+	window.addEventListener('DOMContentLoaded', function(e) {   
+		var btnElm = document.getElementById('btn');
+		console.log(btnElm);
+		btnElm.onclick = function() {
+			myQuery('a').attr('href', 'https://spring.io/');
+// 			var linkList = document.getElementsByTagName('a');
+// 			for (var i = 0; i < linkList.length; i++) {
+// 				var link = linkList[i];
+// 				link.href = 'https://spring.io/';
+// 				link.setAttribute('href', 'https://spring.io/');
+// 			}
+		};
+	});
+</script>
 </head>
 <body>
 	<h1>HELLO HTML</h1>
+	<a href="https://google.com">구글</a>
+	<a href="https://naver.com">네이버</a>
+	<a href="https://daum.net">다음</a>
+	<button type="button" id="btn">링크변경</button>
 </body>
 </html>
